@@ -81,7 +81,7 @@ CloudDrive/
 │   ├── login.html
 │   └── dashboard.html
 │
-├── static/
+├
 │
 ├── screenshots/
 │   ├── login.png
