@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+<div class="flex">
+
+    <!-- SIDEBAR -->
+    <div class="w-64 h-screen bg-gradient-to-b from-indigo-700 to-purple-700 text-white fixed p-6">
+
+        <h1 class="text-2xl font-bold mb-10">☁️ Cloud Drive</h1>
+
+        <a href="/dashboard" class="block py-2 px-3 rounded-lg hover:bg-white/20">🏠 Dashboard</a>
+        <a href="#" class="block py-2 px-3 rounded-lg hover:bg-white/20 mt-2">⬆ Upload</a>
+        <a href="#" class="block py-2 px-3 rounded-lg hover:bg-white/20 mt-2">📁 Files</a>
+
+        <a href="/logout"
+           class="block mt-10 text-center bg-red-500 hover:bg-red-600 py-2 rounded-lg">
+            Logout
+        </a>
+
+    </div>
+
+    <!-- MAIN -->
+    <div class="ml-64 w-full p-8">
+
+        <!-- HEADER -->
+        <div class="flex justify-between items-center mb-8">
+
+            <h2 class="text-3xl font-bold text-gray-800">
+                Welcome Back 👋
+            </h2>
+
+            <div class="text-sm text-gray-500">
+                Your personal storage system
+            </div>
+
+        </div>
+
+        <!-- UPLOAD CARD -->
+        <div class="bg-white shadow-lg rounded-2xl p-6 mb-8 border">
+
+            <h3 class="text-lg font-semibold mb-4">⬆ Upload File</h3>
+
+            <form action="/upload" method="post" enctype="multipart/form-data"
+                  class="flex flex-col md:flex-row gap-4">
+
+                <input type="file" name="file"
+                    class="w-full border rounded-lg p-2">
+
+                <button type="submit"
+                    class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Upload
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- FILES HEADER -->
+        <div class="flex justify-between items-center mb-4">
+
+            <h3 class="text-xl font-bold text-gray-700">📁 Your Files</h3>
+
+            <span class="text-sm text-gray-400">
+                Click to open / copy / share
+            </span>
+
+        </div>
+
+        <!-- FILE LIST -->
+        {% if files %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            {% for file in files %}
+            <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition border">
+
+                <!-- FILE NAME -->
+                <a href="/file/{{ file.key }}" target="_blank"
+                   class="text-indigo-600 font-semibold hover:underline block truncate">
+                    📄 {{ file.key }}
+                </a>
+
+                <!-- ACTIONS -->
+                <div class="flex justify-end gap-4 mt-4 text-lg">
+
+                   <!-- ACTIONS -->
+<div class="flex justify-end gap-3 mt-4">
+
+    <!-- COPY -->
+    <button onclick="copyLink('/file/{{ file.key }}')"
+        class="flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-2 rounded-lg hover:bg-indigo-100 transition">
+        📋 <span>Copy Link</span>
+    </button>
+
+    <!-- SHARE -->
+    <button onclick="shareFile('/file/{{ file.key }}')"
+        class="flex items-center gap-2 bg-green-50 text-green-600 px-3 py-2 rounded-lg hover:bg-green-100 transition">
+        📤 <span>Share</span>
+    </button>
+
+    <!-- DELETE -->
+    <a href="/delete/{{ file.key }}"
+        class="flex items-center gap-2 bg-red-50 text-red-600 px-3 py-2 rounded-lg hover:bg-red-100 transition">
+        ❌ <span>Delete</span>
+    </a>
+
+</div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <!-- EMPTY STATE -->
+        <div class="text-center py-20 bg-white rounded-2xl shadow">
+            <div class="text-5xl mb-4">📂</div>
+            <h2 class="text-xl font-semibold">No files uploaded yet</h2>
+            <p class="text-gray-500">Upload your first file to get started</p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- TOAST + JS (same logic kept, only UI improved) -->
+<script>
+function showMessage(msg) {
+    let toast = document.createElement("div");
+    toast.innerText = msg;
+    toast.className =
+        "fixed bottom-5 right-5 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg";
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 2000);
+}
+
+function copyLink(path) {
+    const fullUrl = window.location.origin + path;
+    navigator.clipboard.writeText(fullUrl);
+    showMessage("Link copied 🔗");
+}
+
+function shareFile(path) {
+    const fullUrl = window.location.origin + path;
+
+    if (navigator.share) {
+        navigator.share({
+            title: "My Cloud File",
+            url: fullUrl
+        });
+    } else {
+        showMessage("Sharing not supported ❌");
+    }
+}
+</script>
+
+</body>
+</html>

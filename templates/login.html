@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Floating animation for login box */
+        .float-box {
+            animation: floaty 4s ease-in-out infinite;
+        }
+
+        @keyframes floaty {
+            0%   { transform: translateY(0px); }
+            50%  { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Soft glow border */
+        .glow-border {
+            box-shadow: 0 0 25px rgba(124,58,237,0.25);
+        }
+
+        /* subtle hover lift */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex">
+
+<!-- LEFT SIDE -->
+<div class="hidden md:flex w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 items-center justify-center text-white p-10">
+
+    <div class="text-center">
+        <div class="text-6xl mb-4">☁️</div>
+        <h1 class="text-4xl font-bold mb-3">Cloud Drive</h1>
+        <p class="text-lg text-white/80">
+            Secure file storage powered by AWS S3
+        </p>
+    </div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="w-full md:w-1/2 flex items-center justify-center bg-gray-50">
+
+    <div class="bg-gradient-to-br from-pink-50 to-white w-96 p-8 rounded-2xl border border-pink-200 shadow-2xl
+                backdrop-blur-xl transition-all duration-300 hover:shadow-pink-200 hover:scale-[1.02]">
+
+        <!-- HEADER -->
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">
+            Welcome Back 👋
+        </h2>
+
+        <p class="text-center text-gray-500 mb-6 text-sm">
+            Login to access your dashboard
+        </p>
+
+        <!-- FORM -->
+        <form method="post" class="space-y-4">
+
+            <input type="text" name="username" placeholder="Username" required
+                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-300 outline-none transition">
+
+            <input type="password" name="password" placeholder="Password" required
+                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-300 outline-none transition">
+
+            <button type="submit"
+                class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg
+                       hover:from-pink-600 hover:to-purple-700 transition font-semibold shadow-md">
+                Sign In
+            </button>
+
+        </form>
+
+        <!-- ERROR -->
+        {% if error %}
+            <div class="mt-4 bg-red-100 text-red-600 text-sm p-2 rounded-lg text-center">
+                {{ error }}
+            </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
