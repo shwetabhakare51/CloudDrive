@@ -70,26 +70,20 @@ The S3 bucket remains private, while authenticated users receive temporary presi
 
 ```text
 CloudDrive/
-│
-├── app.py
-├── s3upload.py
-├── requirements.txt
-├── .gitignore
-├── .env.example
-│
-├── templates/
-│   ├── login.html
-│   └── dashboard.html
-│
-├
-│
 ├── screenshots/
 │   ├── login.png
 │   ├── dashboard.png
 │   ├── dashboard-empty.png
 │   └── s3-bucket.png
-│
-└── README.md
+├── templates/
+│   ├── login.html
+│   └── dashboard.html
+├── .env.example
+├── .gitignore
+├── app.py
+├── README.md
+├── requirements.txt
+└── s3_upload.py
 ```
 
 > **Note:** The actual `.env` file and `venv/` directory are excluded from GitHub using `.gitignore`.
